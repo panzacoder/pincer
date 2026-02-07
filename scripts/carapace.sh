@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# skill-guard - Security-first wrapper for clawhub install
-# https://github.com/panzacoder/skill-guard
+# carapace - Security-first wrapper for clawhub install
+# https://github.com/panzacoder/carapace
 #
 # v1.0.0 - Initial release
 
 set -euo pipefail
 
 VERSION="1.0.0"
-CONFIG_DIR="${HOME}/.config/skill-guard"
+CONFIG_DIR="${HOME}/.config/carapace"
 CONFIG_FILE="${CONFIG_DIR}/config.json"
 HISTORY_FILE="${CONFIG_DIR}/history.json"
 CACHE_DIR="${CONFIG_DIR}/cache"
@@ -28,7 +28,7 @@ else
 fi
 
 # Emojis
-SHIELD="🛡️"
+SHIELD="🦞"
 CHECK="✅"
 WARN="⚠️"
 DANGER="🚨"
@@ -41,7 +41,7 @@ JSON_OUTPUT=false
 # Helpers
 #-----------------------------------------------------------------------------
 
-log() { [[ "$JSON_OUTPUT" == "true" ]] || echo -e "${SHIELD} ${BOLD}skill-guard${NC} $1"; }
+log() { [[ "$JSON_OUTPUT" == "true" ]] || echo -e "${SHIELD} ${BOLD}carapace${NC} $1"; }
 info() { [[ "$JSON_OUTPUT" == "true" ]] || echo -e "  ${BLUE}→${NC} $1"; }
 ok() { [[ "$JSON_OUTPUT" == "true" ]] || echo -e "  ${GREEN}${CHECK}${NC} $1"; }
 warn() { [[ "$JSON_OUTPUT" == "true" ]] || echo -e "  ${YELLOW}${WARN}${NC} $1"; }
@@ -248,7 +248,7 @@ check_bundled_binaries() {
 fetch_skill_info() {
   local skill_slug="$1"
   local version="${2:-}"
-  local dest_file="${3:-/tmp/skill-guard-info.json}"
+  local dest_file="${3:-/tmp/carapace-info.json}"
   
   local output
   if [[ -n "$version" ]]; then
@@ -632,7 +632,7 @@ scan_skill() {
   fi
   
   # Store result for caller
-  echo "$risk_level" > /tmp/skill-guard-risk-level
+  echo "$risk_level" > /tmp/carapace-risk-level
 }
 
 #-----------------------------------------------------------------------------
@@ -688,8 +688,8 @@ cmd_install() {
   scan_skill "$skill_dir" "$skill_name" "$skill_info_file"
   
   local risk_level
-  risk_level=$(cat /tmp/skill-guard-risk-level 2>/dev/null || echo "unknown")
-  rm -f /tmp/skill-guard-risk-level
+  risk_level=$(cat /tmp/carapace-risk-level 2>/dev/null || echo "unknown")
+  rm -f /tmp/carapace-risk-level
   
   # Decision
   if [[ "$JSON_OUTPUT" == "true" ]]; then
@@ -755,7 +755,7 @@ cmd_install() {
 cmd_scan() {
   local target="${1:-}"
   
-  [[ -z "$target" ]] && { error "Usage: skill-guard scan <skill|path>"; exit 1; }
+  [[ -z "$target" ]] && { error "Usage: carapace scan <skill|path>"; exit 1; }
   
   [[ "$JSON_OUTPUT" != "true" ]] && log "v$VERSION"
   
@@ -846,7 +846,7 @@ cmd_audit() {
     
     [[ $danger_count -gt 0 ]] && {
       echo ""
-      warn "Run 'skill-guard scan <skill>' for detailed analysis."
+      warn "Run 'carapace scan <skill>' for detailed analysis."
     }
   fi
 }
@@ -857,13 +857,13 @@ cmd_trust() {
   
   case "$action" in
     add)
-      [[ -z "$value" ]] && { error "Usage: skill-guard trust add <publisher>"; exit 1; }
+      [[ -z "$value" ]] && { error "Usage: carapace trust add <publisher>"; exit 1; }
       jq --arg v "$value" '.trustedPublishers += [$v] | .trustedPublishers |= unique' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp"
       mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
       ok "Added '$value' to trusted publishers."
       ;;
     remove)
-      [[ -z "$value" ]] && { error "Usage: skill-guard trust remove <publisher>"; exit 1; }
+      [[ -z "$value" ]] && { error "Usage: carapace trust remove <publisher>"; exit 1; }
       jq --arg v "$value" '.trustedPublishers -= [$v]' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp"
       mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
       ok "Removed '$value' from trusted publishers."
@@ -889,7 +889,7 @@ cmd_trust() {
       fi
       ;;
     block)
-      [[ -z "$value" ]] && { error "Usage: skill-guard trust block <publisher|skill>"; exit 1; }
+      [[ -z "$value" ]] && { error "Usage: carapace trust block <publisher|skill>"; exit 1; }
       if [[ "$value" == *"/"* ]]; then
         jq --arg v "$value" '.blockedSkills += [$v] | .blockedSkills |= unique' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp"
       else
@@ -899,14 +899,14 @@ cmd_trust() {
       ok "Blocked '$value'."
       ;;
     unblock)
-      [[ -z "$value" ]] && { error "Usage: skill-guard trust unblock <publisher|skill>"; exit 1; }
+      [[ -z "$value" ]] && { error "Usage: carapace trust unblock <publisher|skill>"; exit 1; }
       jq --arg v "$value" '.blockedPublishers -= [$v] | .blockedSkills -= [$v]' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp"
       mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
       ok "Unblocked '$value'."
       ;;
     *)
       error "Unknown trust action: $action"
-      echo "Usage: skill-guard trust <add|remove|list|block|unblock> [value]"
+      echo "Usage: carapace trust <add|remove|list|block|unblock> [value]"
       exit 1
       ;;
   esac
@@ -957,16 +957,16 @@ cmd_config() {
 
 cmd_help() {
   cat << EOF
-${SHIELD} skill-guard v$VERSION — Security-first skill installation
+${SHIELD} carapace v$VERSION — Security-first skill installation
 
 ${BOLD}Usage:${NC}
-  skill-guard install <skill[@version]>   Install with security scan
-  skill-guard scan <skill|path>           Scan without installing
-  skill-guard audit                        Quick-scan all installed skills
-  skill-guard trust <action> [value]      Manage trust/block lists
-  skill-guard history                      View installation history
-  skill-guard config [show|edit|reset]    Manage configuration
-  skill-guard help                         Show this help
+  carapace install <skill[@version]>   Install with security scan
+  carapace scan <skill|path>           Scan without installing
+  carapace audit                        Quick-scan all installed skills
+  carapace trust <action> [value]      Manage trust/block lists
+  carapace history                      View installation history
+  carapace config [show|edit|reset]    Manage configuration
+  carapace help                         Show this help
 
 ${BOLD}Options:${NC}
   --json       Output JSON (for scripting)
@@ -980,13 +980,13 @@ ${BOLD}Trust Actions:${NC}
   list                 Show all trust settings
 
 ${BOLD}Examples:${NC}
-  skill-guard install bird
-  skill-guard scan ./my-skill --json
-  skill-guard trust add steipete
-  skill-guard trust block suspicious-dev
-  skill-guard audit
+  carapace install bird
+  carapace scan ./my-skill --json
+  carapace trust add steipete
+  carapace trust block suspicious-dev
+  carapace audit
 
-${BOLD}Config:${NC} ~/.config/skill-guard/config.json
+${BOLD}Config:${NC} ~/.config/carapace/config.json
 EOF
 }
 
@@ -1018,7 +1018,7 @@ main() {
     history) cmd_history ;;
     config) cmd_config "$@" ;;
     help|--help|-h) cmd_help ;;
-    version|--version|-v) echo "skill-guard v$VERSION" ;;
+    version|--version|-v) echo "carapace v$VERSION" ;;
     *) error "Unknown command: $cmd"; cmd_help; exit 1 ;;
   esac
 }

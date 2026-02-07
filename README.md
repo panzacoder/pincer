@@ -1,25 +1,25 @@
-# skill-guard 🛡️
+# carapace 🛡️
 
 Security-first wrapper for installing agent skills. Scans for malware, prompt injection, and suspicious patterns before installation.
 
 ## Why?
 
-Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. skill-guard adds a security layer.
+Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. carapace adds a security layer.
 
 ## Quick Start
 
 ```bash
 # Install
-clawhub install skill-guard
+clawhub install carapace
 
 # Use instead of clawhub install
-skill-guard install some-skill
+carapace install some-skill
 
 # Scan without installing
-skill-guard scan suspicious-skill
+carapace scan suspicious-skill
 
 # Audit all installed skills
-skill-guard audit
+carapace audit
 ```
 
 ## Features

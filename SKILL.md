@@ -1,40 +1,40 @@
 ---
-name: skill-guard
+name: carapace
 description: Security-first wrapper for installing agent skills. Scans for malware, prompt injection, and suspicious patterns before installation. Use instead of `clawhub install` for safer skill management.
-homepage: https://github.com/panzacoder/skill-guard
+homepage: https://github.com/panzacoder/carapace
 metadata:
   openclaw:
-    emoji: "🛡️"
+    emoji: "🦞"
     requires:
-      bins: ["skill-guard"]
+      bins: ["carapace"]
     install:
       - id: local
         kind: script
-        label: "Install skill-guard"
+        label: "Install carapace"
         script: |
-          chmod +x "${SKILL_DIR}/scripts/skill-guard.sh"
+          chmod +x "${SKILL_DIR}/scripts/carapace.sh"
           mkdir -p ~/.local/bin
-          ln -sf "${SKILL_DIR}/scripts/skill-guard.sh" ~/.local/bin/skill-guard
-          echo "✅ skill-guard installed to ~/.local/bin/skill-guard"
+          ln -sf "${SKILL_DIR}/scripts/carapace.sh" ~/.local/bin/carapace
+          echo "✅ carapace installed to ~/.local/bin/carapace"
 ---
 
-# skill-guard 🛡️
+# carapace 🛡️
 
 Security-first wrapper for `clawhub install`. Scans skills for malware, prompt injection, and suspicious patterns before installation.
 
 ## Why?
 
-Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. skill-guard adds a security layer before you install anything.
+Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. carapace adds a security layer before you install anything.
 
 ## Install
 
 ```bash
 # From ClawHub
-clawhub install skill-guard
+clawhub install carapace
 
 # Or manually
-chmod +x ./scripts/skill-guard.sh
-ln -sf "$(pwd)/scripts/skill-guard.sh" ~/.local/bin/skill-guard
+chmod +x ./scripts/carapace.sh
+ln -sf "$(pwd)/scripts/carapace.sh" ~/.local/bin/carapace
 ```
 
 **Dependencies:**
@@ -48,76 +48,76 @@ ln -sf "$(pwd)/scripts/skill-guard.sh" ~/.local/bin/skill-guard
 
 ```bash
 # Instead of: clawhub install some-skill
-skill-guard install some-skill
+carapace install some-skill
 
 # With specific version
-skill-guard install some-skill@1.2.0
+carapace install some-skill@1.2.0
 ```
 
 ### Scan Without Installing
 
 ```bash
 # Scan a ClawHub skill
-skill-guard scan some-skill
+carapace scan some-skill
 
 # Scan a local directory
-skill-guard scan ./path/to/skill
+carapace scan ./path/to/skill
 
 # JSON output for automation
-skill-guard scan some-skill --json
+carapace scan some-skill --json
 ```
 
 ### Audit Installed Skills
 
 ```bash
 # Quick-scan all installed skills
-skill-guard audit
+carapace audit
 
 # JSON output
-skill-guard audit --json
+carapace audit --json
 ```
 
 ### Manage Trust
 
 ```bash
 # Add trusted publisher (auto-approve clean skills)
-skill-guard trust add steipete
+carapace trust add steipete
 
 # Remove from trusted
-skill-guard trust remove old-publisher
+carapace trust remove old-publisher
 
 # Block a publisher or skill
-skill-guard trust block suspicious-dev
-skill-guard trust block malware-skill
+carapace trust block suspicious-dev
+carapace trust block malware-skill
 
 # Unblock
-skill-guard trust unblock redeemed-dev
+carapace trust unblock redeemed-dev
 
 # List all trust settings
-skill-guard trust list
+carapace trust list
 ```
 
 ### View History
 
 ```bash
 # See what you've installed
-skill-guard history
+carapace history
 
 # JSON output
-skill-guard history --json
+carapace history --json
 ```
 
 ### Configuration
 
 ```bash
 # Show current config
-skill-guard config show
+carapace config show
 
 # Edit in $EDITOR
-skill-guard config edit
+carapace config edit
 
 # Reset to defaults
-skill-guard config reset
+carapace config reset
 ```
 
 ## What It Checks
@@ -164,7 +164,7 @@ skill-guard config reset
 
 ## Configuration
 
-Config: `~/.config/skill-guard/config.json`
+Config: `~/.config/carapace/config.json`
 
 ```json
 {
@@ -192,14 +192,14 @@ Config: `~/.config/skill-guard/config.json`
 
 ### Clean Install
 ```
-$ skill-guard install bird
-🛡️ skill-guard v1.0.0
+$ carapace install bird
+🛡️ carapace v1.0.0
 
   → Fetching bird from ClawHub...
   Publisher: steipete (trusted)
   Stats: 7363 downloads · 27 ★ · created 1 month ago
 
-🛡️ skill-guard Scanning bird...
+🛡️ carapace Scanning bird...
 
   → Running mcp-scan...
   ✅ mcp-scan: passed
@@ -220,14 +220,14 @@ Risk Assessment:
 
 ### Dangerous Skill Blocked
 ```
-$ skill-guard install sketchy-tool
-🛡️ skill-guard v1.0.0
+$ carapace install sketchy-tool
+🛡️ carapace v1.0.0
 
   → Fetching sketchy-tool from ClawHub...
   Publisher: newaccount (unknown)
   Stats: 12 downloads · 0 ★ · created 2 days ago
 
-🛡️ skill-guard Scanning sketchy-tool...
+🛡️ carapace Scanning sketchy-tool...
 
   → Running mcp-scan...
   🚨 mcp-scan: high-risk warnings
