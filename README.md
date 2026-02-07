@@ -1,25 +1,25 @@
-# carapace 🛡️
+# pincer 🛡️
 
 Security-first wrapper for installing agent skills. Scans for malware, prompt injection, and suspicious patterns before installation.
 
 ## Why?
 
-Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. carapace adds a security layer.
+Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. pincer adds a security layer.
 
 ## Quick Start
 
 ```bash
 # Install
-clawhub install carapace
+clawhub install pincer
 
 # Use instead of clawhub install
-carapace install some-skill
+pincer install some-skill
 
 # Scan without installing
-carapace scan suspicious-skill
+pincer scan suspicious-skill
 
 # Audit all installed skills
-carapace audit
+pincer audit
 ```
 
 ## Features

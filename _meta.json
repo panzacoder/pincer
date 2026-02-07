@@ -1,8 +1,8 @@
 {
-  "slug": "carapace",
-  "displayName": "carapace",
+  "slug": "pincer",
+  "displayName": "pincer",
   "summary": "Security-first wrapper for installing agent skills. Scans for malware, prompt injection, and suspicious patterns before installation.",
   "tags": ["security", "malware", "scanning", "clawhub", "install"],
-  "repository": "https://github.com/panzacoder/carapace",
+  "repository": "https://github.com/panzacoder/pincer",
   "license": "MIT"
 }

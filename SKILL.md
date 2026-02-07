@@ -1,40 +1,40 @@
 ---
-name: carapace
+name: pincer
 description: Security-first wrapper for installing agent skills. Scans for malware, prompt injection, and suspicious patterns before installation. Use instead of `clawhub install` for safer skill management.
-homepage: https://github.com/panzacoder/carapace
+homepage: https://github.com/panzacoder/pincer
 metadata:
   openclaw:
     emoji: "🦞"
     requires:
-      bins: ["carapace"]
+      bins: ["pincer"]
     install:
       - id: local
         kind: script
-        label: "Install carapace"
+        label: "Install pincer"
         script: |
-          chmod +x "${SKILL_DIR}/scripts/carapace.sh"
+          chmod +x "${SKILL_DIR}/scripts/pincer.sh"
           mkdir -p ~/.local/bin
-          ln -sf "${SKILL_DIR}/scripts/carapace.sh" ~/.local/bin/carapace
-          echo "✅ carapace installed to ~/.local/bin/carapace"
+          ln -sf "${SKILL_DIR}/scripts/pincer.sh" ~/.local/bin/pincer
+          echo "✅ pincer installed to ~/.local/bin/pincer"
 ---
 
-# carapace 🛡️
+# pincer 🛡️
 
 Security-first wrapper for `clawhub install`. Scans skills for malware, prompt injection, and suspicious patterns before installation.
 
 ## Why?
 
-Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. carapace adds a security layer before you install anything.
+Agent skills are powerful — they're basically executable documentation. The ClawHub ecosystem has already seen [malware campaigns](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) distributing infostealers via innocent-looking skills. pincer adds a security layer before you install anything.
 
 ## Install
 
 ```bash
 # From ClawHub
-clawhub install carapace
+clawhub install pincer
 
 # Or manually
-chmod +x ./scripts/carapace.sh
-ln -sf "$(pwd)/scripts/carapace.sh" ~/.local/bin/carapace
+chmod +x ./scripts/pincer.sh
+ln -sf "$(pwd)/scripts/pincer.sh" ~/.local/bin/pincer
 ```
 
 **Dependencies:**
@@ -48,76 +48,76 @@ ln -sf "$(pwd)/scripts/carapace.sh" ~/.local/bin/carapace
 
 ```bash
 # Instead of: clawhub install some-skill
-carapace install some-skill
+pincer install some-skill
 
 # With specific version
-carapace install some-skill@1.2.0
+pincer install some-skill@1.2.0
 ```
 
 ### Scan Without Installing
 
 ```bash
 # Scan a ClawHub skill
-carapace scan some-skill
+pincer scan some-skill
 
 # Scan a local directory
-carapace scan ./path/to/skill
+pincer scan ./path/to/skill
 
 # JSON output for automation
-carapace scan some-skill --json
+pincer scan some-skill --json
 ```
 
 ### Audit Installed Skills
 
 ```bash
 # Quick-scan all installed skills
-carapace audit
+pincer audit
 
 # JSON output
-carapace audit --json
+pincer audit --json
 ```
 
 ### Manage Trust
 
 ```bash
 # Add trusted publisher (auto-approve clean skills)
-carapace trust add steipete
+pincer trust add steipete
 
 # Remove from trusted
-carapace trust remove old-publisher
+pincer trust remove old-publisher
 
 # Block a publisher or skill
-carapace trust block suspicious-dev
-carapace trust block malware-skill
+pincer trust block suspicious-dev
+pincer trust block malware-skill
 
 # Unblock
-carapace trust unblock redeemed-dev
+pincer trust unblock redeemed-dev
 
 # List all trust settings
-carapace trust list
+pincer trust list
 ```
 
 ### View History
 
 ```bash
 # See what you've installed
-carapace history
+pincer history
 
 # JSON output
-carapace history --json
+pincer history --json
 ```
 
 ### Configuration
 
 ```bash
 # Show current config
-carapace config show
+pincer config show
 
 # Edit in $EDITOR
-carapace config edit
+pincer config edit
 
 # Reset to defaults
-carapace config reset
+pincer config reset
 ```
 
 ## What It Checks
@@ -164,7 +164,7 @@ carapace config reset
 
 ## Configuration
 
-Config: `~/.config/carapace/config.json`
+Config: `~/.config/pincer/config.json`
 
 ```json
 {
@@ -192,14 +192,14 @@ Config: `~/.config/carapace/config.json`
 
 ### Clean Install
 ```
-$ carapace install bird
-🛡️ carapace v1.0.0
+$ pincer install bird
+🛡️ pincer v1.0.0
 
   → Fetching bird from ClawHub...
   Publisher: steipete (trusted)
   Stats: 7363 downloads · 27 ★ · created 1 month ago
 
-🛡️ carapace Scanning bird...
+🛡️ pincer Scanning bird...
 
   → Running mcp-scan...
   ✅ mcp-scan: passed
@@ -220,14 +220,14 @@ Risk Assessment:
 
 ### Dangerous Skill Blocked
 ```
-$ carapace install sketchy-tool
-🛡️ carapace v1.0.0
+$ pincer install sketchy-tool
+🛡️ pincer v1.0.0
 
   → Fetching sketchy-tool from ClawHub...
   Publisher: newaccount (unknown)
   Stats: 12 downloads · 0 ★ · created 2 days ago
 
-🛡️ carapace Scanning sketchy-tool...
+🛡️ pincer Scanning sketchy-tool...
 
   → Running mcp-scan...
   🚨 mcp-scan: high-risk warnings
