@@ -1,0 +1,8 @@
+{
+  "slug": "skill-guard",
+  "displayName": "skill-guard",
+  "summary": "Security-first wrapper for installing agent skills. Scans for malware, prompt injection, and suspicious patterns before installation.",
+  "tags": ["security", "malware", "scanning", "clawhub", "install"],
+  "repository": "https://github.com/panzacoder/skill-guard",
+  "license": "MIT"
+}
