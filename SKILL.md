@@ -8,14 +8,24 @@ metadata:
     requires:
       bins: ["pincer"]
     install:
-      - id: local
+      - id: symlink
         kind: script
-        label: "Install pincer"
+        label: "Install pincer to PATH"
         script: |
           chmod +x "${SKILL_DIR}/scripts/pincer.sh"
           mkdir -p ~/.local/bin
           ln -sf "${SKILL_DIR}/scripts/pincer.sh" ~/.local/bin/pincer
-          echo "✅ pincer installed to ~/.local/bin/pincer"
+          echo ""
+          echo "✅ pincer installed!"
+          echo ""
+          echo "Make sure ~/.local/bin is in your PATH:"
+          echo '  export PATH="$HOME/.local/bin:$PATH"'
+          echo ""
+          echo "Usage:"
+          echo "  pincer install <skill>  # Safe install with scanning"
+          echo "  pincer scan <skill>     # Scan without installing"
+          echo "  pincer audit            # Scan all installed skills"
+          echo ""
 ---
 
 # pincer 🛡️
